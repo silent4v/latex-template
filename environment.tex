@@ -25,6 +25,21 @@
   contents={\includegraphics{ntust}}
 }
 
+% 標題指令
+\newcommand\zhHeader[1]{
+    \addcontentsline{toc}{chapter}{#1}
+    \begin{center}
+    \makebox[4cm][s]{\textbf{\LARGE{#1}}}\\
+    \end{center}
+}
+
+\newcommand\enHeader[1]{
+    \addcontentsline{toc}{chapter}{#1}
+    \begin{center}
+    \makebox[3cm][c]{\textbf{\LARGE{#1}}}\\
+    \end{center}
+}
+
 % 字體編碼與顏色
 \usepackage{fontspec}
 \usepackage{xeCJK}
@@ -92,14 +107,22 @@
   \titleformat{\subsection}[block] % "小節(subsection)"標題 16pt，左對齊
     {\raggedright\bfseries\fontsize{16pt}{16pt}\selectfont}
     {\arabic{subsection}.}{12pt}{}
+    
+  \titlecontents{chapter}[0pt]
+  {\bfseries}{第\,\zhnumber{\thecontentslabel}\,章\quad}{}
+  {\titlerule*[1pc]{.}\contentspage}
 
-  \renewcommand{\listfigurename}{圖目錄}
-  \renewcommand{\listtablename}{表目錄}
-  \renewcommand{\contentsname}{目錄}
+  \titlecontents{section}[2em]
+  {}{（\thecontentslabel)\quad}{}
+  {\titlerule*[1pc]{.}\contentspage}
+
+  \renewcommand{\listfigurename}{\makebox[4cm][s]{\textbf{\LARGE{圖目錄}}}}
+  \renewcommand{\listtablename}{\makebox[4cm][s]{\textbf{\LARGE{表目錄}}}}
+  \renewcommand{\contentsname}{\makebox[4cm][s]{\textbf{\LARGE{目錄}}}}
 }
 
 \newcommand{\UseEnglishStyle}{
-    \renewcommand{\thechapter}{\arabic{chapter}}
+  \renewcommand{\thechapter}{\arabic{chapter}}
   \renewcommand{\thesection}{\thechapter.\arabic{section}}
   \renewcommand{\thesubsection}{\thechapter.\arabic{section}.\arabic{subsection}}
   \renewcommand{\thesubsubsection}{\thechapter.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
