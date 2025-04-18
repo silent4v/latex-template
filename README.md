@@ -7,7 +7,7 @@
 ```txt
 ├── main.tex                 # 論文主檔案（編譯入口）
 ├── environment.tex          # 樣式與格式設定（字體、標題、浮水印等）
-├── thesis_info.tex          # 論文資訊填寫區（姓名、題目、學位等）
+├── titlepage.tex          # 論文資訊填寫區（姓名、題目、學位等）
 ├── references.bib           # 參考文獻資料庫（BibTeX 格式）
 ├── ntust.png                # 浮水印圖片（可自行更換）
 ├── front-pages/             # 封面、摘要、致謝等前置章節
@@ -28,7 +28,7 @@
 
 1. 開啟 `main.tex`
 2. 編譯方式建議使用 XeLaTeX（支援中文與字型）
-3. 修改 `thesis_info.tex` 填入你的論文資訊
+3. 修改 `titlepage.tex` 填入你的論文資訊
 4. 修改 `main-pages/` 內容為你的研究內容
 
 本範本在 [Overleaf](https://www.overleaf.com/read/mbytjqbxmsws#d67b90) 可以預覽，無需安裝任何環境。
@@ -60,6 +60,94 @@
   - `\InsertFigure` 也只是提供一個快速插入圖片的指令，需要更詳盡的調整，還是得要自己處理
 - 若出現中文顯示問題，請確認使用 XeLaTeX 編譯器
 - 本模板使用 AR PL 字型系列，Overleaf 可正常支援，如需自訂字體請修改 `environment.tex`
+
+## 常見問題
+
+- 我有多個指導教授 (共同指導)
+
+> `titlepage.tex` 找到作者區塊，使用 `\InfoLine{指導教授}{其他教授名稱}` 可以插入其他資訊
+
+- 我的題目比較長，或者我想調整封面的排版
+
+> 目前應該允許稍微長一點的題目，比方說如下所示範。如果感覺還是不夠的話，可以嘗試調整 `titlepage.tex` 題目的字體大小。
+> 每個區塊之間目前都使用 `\vspace` 來設定 margin，如果有需要的可以調大一點或調小一點。甚至可以考慮直接重寫整個 `\makeTitlepage` 的功能，來建立你自己的論文封面頁
+
+![titlepage](figures/titlepage.png)
+
+- 想要調整邊界、範圍、文字大小等
+
+所有的設定都在 `environment.tex` 可以進行調整，包含這些資訊
+
+### `environment.tex` 可調整項目
+
+所有排版與樣式的設定皆集中於 `environment.tex` 中進行統一配置，以下為可調整內容：
+
+#### 浮水印設定
+
+- `scale`：浮水印圖片縮放比例（例如 `0.5`）
+- `angle`：旋轉角度（例如 `0` 表示不旋轉）
+- `opacity`：透明度（0~1，數值越小越透明）
+- `contents`：插入的圖片內容（例如 `\includegraphics{ntust}`）
+
+#### 版面與字體設定
+
+調整整體文件的外觀：
+
+- 頁面邊界（透過 `geometry` 設定）
+  - 上：3cm，下：2cm，左：3cm，右：3cm
+- 行距設定（使用 `setspace` 套件）
+  - 預設為 1.5 倍行距（`\onehalfspacing`）
+- 字體設定（透過 `fontspec` 與 `xeCJK`）
+  - 英文：`Times New Roman`
+  - 中文：`AR PL UKai TW`（可替換）
+  - 支援自動中文換行
+
+#### 標題與目錄樣式
+
+定義章節標題、段落樣式與目錄編排方式：
+
+- 支援中英文風格切換
+  - 使用 `\UseChineseStyle`、`\UseEnglishStyle` 一鍵切換
+- 可調整的項目包含：
+  - 標題字級（chapter/section/subsection）
+  - 編號格式
+    - 中文：一、(一)、1.、(1)
+    - 英文：1.、1.1、1.1.1
+  - 目錄顯示格式與縮排
+- 自訂目錄標題（目錄、圖目錄、表目錄）
+
+#### 頁碼設定
+
+- 使用 `fancyhdr` 套件自訂頁碼樣式
+  - 預設頁碼置於下方中央
+  - 可依需求修改上下左右頁碼位置
+
+#### 圖表樣式與插入
+
+提供自訂的圖片與表格插入指令，標準化版面：
+
+- 插入圖片：`\InsertFigure[標籤]{圖片檔案}{標題}`
+  - 圖片寬度預設為 `0.8\linewidth`
+- 插入表格：`\InsertTable[標籤]{欄位格式}{表格內容}{標題}`
+  - 自動套用 `\toprule` / `\bottomrule` 樣式
+- 圖表編號格式：
+  - 圖：`章-編號`（如：1-1）
+  - 表：`章-編號`（如：2-3）
+
+#### 文獻引用格式（`biblatex`）
+
+- 引用樣式：`numeric`，不排序（`sorting=none`）
+- 引用來源：`references.bib`
+- 自訂參考文獻標題：
+  - 中文：`參考文獻`
+  - 英文：`References`
+- 可使用 `\printbibliography[heading=zhbib]` 產生中文參考文獻區塊
+
+#### 標題區塊指令（封面/章節）
+
+- `\zhHeader{}`：建立中文標題並加入目錄
+- `\enHeader{}`：建立英文標題並加入目錄
+- 文字可自訂寬度與字級大小（預設為 `\LARGE`）
 
 ## 授權與貢獻
 
