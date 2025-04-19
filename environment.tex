@@ -1,17 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% environment.tex
-%% 本檔案集中設定整體論文格式、樣式與插圖排版
-%% 可調整項目：
-%% - 浮水印樣式與圖片
-%% - 字體與中英文對應字型
-%% - 章節標題與目錄樣式（中文／英文切換）
-%% - 頁邊距與行距
-%% - 圖表樣式與插入方式
-%% - 文獻引用格式與標題（中英文分開）
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % 常用套件引入
-\usepackage{ctex}                   % 中文支持
 \usepackage{hyperref}               % 支持超連結和引用
 \usepackage{amsmath, amssymb}       % 高級數學符號
 \usepackage{booktabs}               % 表格橫線
@@ -29,26 +16,18 @@
 \usepackage{ragged2e}               % 文本對齊控制（如 \justifying）
 \usepackage{tabularx}               % 自動調整欄寬的表格
 \usepackage{url}                    % 顯示網址連結
-\usepackage{graphicx}               % 插入圖片
-\usepackage{tikz}                   % 繪圖與背景元素（支援浮水印等）
-\usepackage{atbegshi}               % page hook 支援（如背景插圖）
+\usepackage{ctex}                   % 中文支持
 
-% 浮水印設定
-\AddToHook{shipout/background}{
-  \ifnum\value{page}>1
-    \put(0,0){
-      \parbox[b][\paperheight]{\paperwidth}{
-        \centering
-        \begin{tikzpicture}[remember picture, overlay]
-          \node[opacity=0.05] at (current page.center) {\includegraphics[width=0.6\paperwidth]{ntust}};
-        \end{tikzpicture}
-      }
-    }
-  \fi
+% 浮水印
+\usepackage{background}
+\backgroundsetup{
+  scale=0.5,
+  angle=0,
+  opacity=0.1,
+  contents={\includegraphics{ntust}}
 }
 
-
-% 建立標題的指令
+% 標題指令
 \newcommand\zhHeader[1]{
     \addcontentsline{toc}{chapter}{#1}
     \begin{center}
@@ -68,8 +47,8 @@
 \usepackage{xeCJK}
 \usepackage[UTF8,heading = true]{ctex}
 
-%% 該網址包含 Overleaf 支援的字體
-%% https://www.overleaf.com/learn/latex/Questions/Which_OTF_or_TTF_fonts_are_supported_via_fontspec
+% 該網址包含 Overleaf 支援的字體
+% https://www.overleaf.com/learn/latex/Questions/Which_OTF_or_TTF_fonts_are_supported_via_fontspec
 \setmainfont{Times New Roman}
 \setCJKmainfont[AutoFakeBold=3]{AR PL UKai TW}
 \setCJKmonofont{AR PL UKai TW}
@@ -101,6 +80,16 @@
 \@addtoreset{paragraph}{subsubsection}
 \pretocmd{\chapter}{\setcounter{section}{0}}{}{}
 
+% Refenence 設定
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\addbibresource{references.bib}
+\defbibheading{zhbib}{
+  \zhHeader{參考文獻}
+}
+\defbibheading{enbib}{
+  \enHeader{References}
+}
+
 % 段落樣式
 \newcommand{\UseChineseStyle}{
   % 中文論文
@@ -123,15 +112,11 @@
     
   \titlecontents{chapter}[0pt]
   {\bfseries}{第\,\zhnumber{\thecontentslabel}\,章\quad}{}
-  {\titlerule*[0.8pc]{.}\contentspage}
+  {\titlerule*[1pc]{.}\contentspage}
 
-  \titlecontents{section}[1.5em]
+  \titlecontents{section}[2em]
   {}{（\thecontentslabel)\quad}{}
-  {\titlerule*[0.8pc]{.}\contentspage}
-
-  \titlecontents{subsection}[4.5em]
-  {}{\thecontentslabel.\quad}{}
-  {\titlerule*[0.8pc]{.}\contentspage}
+  {\titlerule*[1pc]{.}\contentspage}
 
   \renewcommand{\listfigurename}{\makebox[4cm][s]{\textbf{\LARGE{圖目錄}}}}
   \renewcommand{\listtablename}{\makebox[4cm][s]{\textbf{\LARGE{表目錄}}}}
@@ -164,16 +149,6 @@
   \renewcommand{\listfigurename}{List of Figures}
   \renewcommand{\listtablename}{List of Tables}
   \renewcommand{\contentsname}{Contents}
-}
-
-% Refenence 設定
-\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
-\addbibresource{references.bib}
-\defbibheading{zhbib}{
-  \zhHeader{參考文獻}
-}
-\defbibheading{enbib}{
-  \enHeader{References}
 }
 
 % 頁碼設置
