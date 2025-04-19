@@ -2,7 +2,6 @@
 \input{environment}
 \input{titlepage}
 \begin{document}
-\backgroundsetup{contents={}}
 
 % 格式依據台科大 112年 論文編排規則 
 %% https://etheses.lib.ntust.edu.tw/media/download/ed6370c8-7c81-11ee-b999-0242ac1f0806.pdf
@@ -13,8 +12,7 @@
 \makeTitlepage
 \parskip=2ex
 
-% 正文之前的內容，致謝、目錄等資訊，此處開啟浮水印
-\backgroundsetup{contents={\includegraphics[width=0.8\paperwidth]{ntust}}}
+% 正文之前的內容，致謝、目錄等資訊
 \include{front-pages/_frontpage}
 
 % 論文的正文
