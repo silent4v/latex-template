@@ -1,12 +1,18 @@
 % 引用的是RFC正式提案
 @misc{rfc3550,
-  author       = {H. Schulzrinne and S. Casner and R. Frederick and V. Jacobson},
-  title        = {{RTP: A Transport Protocol for Real-Time Applications}},
-  howpublished = {RFC 3550},
-  year         = {2003},
-  note         = {\url{https://www.rfc-editor.org/info/rfc3550}},
+    series =    {Request for Comments},
+    number =    3550,
+    howpublished =  {RFC 3550},
+    publisher = {RFC Editor},
+    doi =       {10.17487/RFC3550},
+    url =       {https://www.rfc-editor.org/info/rfc3550},
+    author =    {Henning Schulzrinne and Stephen L. Casner and Ron Frederick and Van Jacobson},
+    title =     {{RTP: A Transport Protocol for Real-Time Applications}},
+    pagetotal = 104,
+    year =      2003,
+    month =     jul,
+    abstract =  {This memorandum describes RTP, the real-time transport protocol. RTP provides end-to-end network transport functions suitable for applications transmitting real-time data, such as audio, video or simulation data, over multicast or unicast network services. RTP does not address resource reservation and does not guarantee quality-of- service for real-time services. The data transport is augmented by a control protocol (RTCP) to allow monitoring of the data delivery in a manner scalable to large multicast networks, and to provide minimal control and identification functionality. RTP and RTCP are designed to be independent of the underlying transport and network layers. The protocol supports the use of RTP-level translators and mixers. Most of the text in this memorandum is identical to RFC 1889 which it obsoletes. There are no changes in the packet formats on the wire, only changes to the rules and algorithms governing how the protocol is used. The biggest change is an enhancement to the scalable timer algorithm for calculating when to send RTCP packets in order to minimize transmission in excess of the intended rate when many participants join a session simultaneously. {[}STANDARDS-TRACK{]}},
 }
-
 % 引用的是技術規格書
 @techreport{srt-protocol,
   author       = {Haivision},

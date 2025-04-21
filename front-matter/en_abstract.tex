@@ -1,0 +1,21 @@
+\newpage
+\enHeader{\enAbstractTitle}
+\normalsize
+
+%%%%
+
+This document follows the thesis formatting guidelines recommended by National Taiwan University of Science and Technology. Recognizing that most users today are accustomed to Markdown-style writing, this template is designed to assist users in transitioning from Markdown to the structured syntax of \LaTeX{}.
+
+Each chapter introduces common Markdown expressions and their corresponding \LaTeX{} syntax, including examples of pseudo code, tables, figures, and referencing techniques such as \verb|\ref|, \verb|\nameref|, and \verb|\cite|. The aim is to provide both conceptual and practical understanding of academic typesetting.
+
+To help users quickly understand the file structure, the following key components are highlighted:
+
+\begin{itemize}
+  \item \textbf{\texttt{environment.tex}}: Loads essential packages and defines global formatting. Font styles, spacing, and language settings can be customized here. It must be included at the top of \texttt{main.tex} before loading any other content.
+
+  \item \textbf{\texttt{frontmatter.tex}}: Manages the preliminary parts of the thesis, including the abstract, acknowledgments, table of contents, and figure/table lists. These sections are stored in the \texttt{front-matter/} directory for modular editing.
+
+  \item \textbf{\texttt{main.tex}}: The entry point of the entire thesis compilation. It includes chapters from the \texttt{chapters/} directory. During early drafting stages, users may comment out unnecessary \texttt{\textbackslash include} lines (e.g., unused chapters or front matter) to accelerate compilation.
+\end{itemize}
+
+This template aims not only to offer a functional starting point, but also to help users gain familiarity with the semantic and structural patterns of \LaTeX{}, laying a solid foundation for producing high-quality academic documents.

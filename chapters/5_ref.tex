@@ -1,0 +1,63 @@
+\chapter{交叉引用與文獻引用機制}
+\label{chap5}
+
+LaTeX 提供強大且嚴謹的交叉引用機制，可讓使用者在長篇文件中準確引用圖表、章節、演算法與外部文獻，維持內容一致性並提升可讀性。本章將介紹四種常見引用指令：\verb|\ref|、\verb|\autoref|、\verb|\nameref| 與 \verb|\cite|，並說明其使用情境與差異。除了\verb|\cite|以外，這些都要跟 \verb|\label| 語法進行搭配。
+
+\section{標號引用：\texttt{\textbackslash ref}}
+
+\verb|\ref| 是最基本的標號引用指令，僅輸出對應編號本身，不包含任何類型前綴。使用者需手動加上詞彙（如「圖」、「表」、「演算法」）：
+
+\begin{verbatim}
+如圖~\ref{fig:architecture} 所示 ...
+\end{verbatim}
+
+輸出結果範例：
+
+> 如圖~3 所示 ...
+
+此語法適用於細緻排版控制，但需使用者自行維持用詞一致。
+
+\section{自動標號類型：\texttt{\textbackslash autoref}}
+
+\verb|\autoref| 來自 \texttt{hyperref} 套件，會根據標籤所屬環境自動加上類型前綴（如 Figure、Table、Algorithm 等），語法簡潔且一致性高：
+
+\begin{verbatim}
+\autoref{alg:factorial}
+\end{verbatim}
+
+輸出結果：
+
+> Algorithm 1
+
+這對於長篇文件尤為實用，能大幅減少人工錯誤，但前綴會依語言預設值（英文），若需中文可使用 \texttt{cleveref} 套件替代。
+
+\section{引用名稱：\texttt{\textbackslash nameref}}
+
+\verb|\nameref|（需載入 \texttt{nameref} 套件，或搭配 \texttt{hyperref}）用來輸出標籤對應的標題文字，非常適合自然語言式敘述：
+
+\begin{verbatim}
+詳見「\nameref{sec:evaluation} 」一節。
+\end{verbatim}
+
+輸出結果：
+
+> 詳見「效能評估」一節。
+
+此語法對於強調章節標題內容而非編號的敘述情境特別有用，可與 \verb|\ref| 或 \verb|\autoref| 搭配使用。
+
+\section{文獻引用：\texttt{\textbackslash cite}}
+
+\verb|\cite| 用於插入文獻來源標號，通常配合 BibTeX 或 BibLaTeX 資料庫管理文獻。引用格式與排序會由所選格式決定，例如：
+
+\begin{verbatim}
+如文獻~\cite{webrtc-overview} 所述 ...
+\end{verbatim}
+
+\begin{itemize}
+\item 如RFC3350~\cite{rfc3550} 所述 ...
+\item 參考 Gstreamer~\cite{gstreamer-gitlab}網站 ...
+\item 根據 SRT~\cite{srt-protocol} 協定 ...
+\item 此篇論文 ~\cite{hoang2018dynamic} 指出...
+\end{itemize}
+
+這樣就可以引用參考資料了。在本模板中，已經使用 \verb|\addbibresource{references.bib}| 把 references.bib 加入參考來源了，只需要把對應的引用格式丟入該檔案，並確保 main.tex 的最下方有使用 \verb|\printbibliography[heading=zhbib]| 渲染參考文獻即可

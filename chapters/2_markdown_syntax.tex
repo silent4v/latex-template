@@ -1,0 +1,105 @@
+\chapter{Markdown 語法映射}
+\label{chap2}
+
+在撰寫技術文件時，Markdown 與 LaTeX 是兩種常見的標記語言。Markdown 語法簡潔直觀，適用於快速記錄與網頁排版，而 LaTeX 則因其排版精細與學術用途而被廣泛使用於論文撰寫。下列將介紹 Markdown 中常見的語法元素，並說明其在 LaTeX 中的對應寫法。
+
+\section{標題結構對應}
+
+Markdown 中以井字號（\#）表示標題階層，從 一個 \# 到 六個 \# 分別對應第一至第六層標題。LaTeX 中則使用章節結構指令來表達對應層級，如下所示：
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Markdown 標題語法} & \textbf{對應 LaTeX 指令} \\
+\midrule
+\# Header 1        & \verb|\chapter{...}|         \\
+\#\# Header 2      & \verb|\section{...}|         \\
+\#\#\# Header 3    & \verb|\subsection{...}|      \\
+\#\#\#\# Header 4  & \verb|\subsubsection{...}|   \\
+\#\#\#\#\# Header 5& \verb|\paragraph{...}|       \\
+\#\#\#\#\#\# Header 6 & \verb|\subparagraph{...}| \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{清單結構}
+
+Markdown 支援有序與無序清單，分別使用數字與破折號（-）表示。在 LaTeX 中，對應為 \verb|enumerate| 與 \verb|itemize| 環境：
+
+有序清單(Ordered List)
+\begin{verbatim}
+\begin{enumerate}
+  \item 第一項
+  \item 第二項
+  \item 第三項
+\end{enumerate}
+\end{verbatim}
+
+\begin{enumerate}
+  \item 第一項
+  \item 第二項
+  \item 第三項
+\end{enumerate}
+
+無序清單(Unordered List)
+\begin{verbatim}
+\begin{itemize}
+  \item 第一項
+  \item 第二項
+  \item 第三項
+\end{itemize}
+\end{verbatim}
+
+\begin{itemize}
+  \item 第一項
+  \item 第二項
+  \item 第三項
+\end{itemize}
+
+\section{引用區塊（Blockquote）}
+
+Markdown 使用 \texttt{>} 表示引用。在 LaTeX 中，可使用 \verb|quote| 環境：
+
+\begin{verbatim}
+\begin{quote}
+這是一段引用文字。
+\end{quote}
+\end{verbatim}
+
+\begin{quote}
+這是一段引用文字。
+\end{quote}
+
+\section{文字樣式}
+
+Markdown 提供簡易的文字樣式控制，以下為其在 LaTeX 中的對應方式：
+
+\begin{itemize}
+  \item 粗體：LaTeX 使用 \verb|\textbf{Text}|
+  \item 斜體：LaTeX 使用 \verb|\textit{Text}|
+  \item 底線：LaTeX 使用 \verb|\uline{Text}|（需載入 \verb|ulem| 套件）
+\end{itemize}
+
+\section{程式碼表示法（Code）}
+
+\paragraph{行內程式碼}
+\begin{itemize}
+  \item Markdown：\verb|`code`|
+  \item LaTeX：\verb|\texttt{code}|
+\end{itemize}
+
+\paragraph{區塊程式碼}
+基本用法是 \verb|listings| 套件輔助顯示：
+
+\begin{verbatim}
+\usepackage{listings}
+...
+\begin{lstlisting}[language=Python]
+def hello():
+    print("Hello, World!")
+\end{lstlisting}
+\end{verbatim}
+
+% 但是這套件的效果其實滿差的，筆者會建議使用 minted(~\nameref{chap4} 會介紹)，在 Overleaf 上有直接整合。透過上述對應說明，使用者可將一些基本 Markdown 編寫習慣轉換為 LaTeX 撰寫。
+
+% 而對於表格、圖片，將會在下一章「~\nameref{chap3}」說明，因為 Table 與 Picture 在 LaTeX 算是一個比較複雜的主題

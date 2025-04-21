@@ -1,0 +1,20 @@
+\newpage
+\zhHeader{\zhAbstractTitle}
+\normalsize
+%%%%
+
+本文件依據國立臺灣科技大學論文格式建議撰寫，作為撰寫學術文件時的起始範本。考量到現代多數使用者已習慣以 Markdown 撰寫筆記與報告，本模板設計的核心目標之一，是協助使用者從 Markdown 思維順利過渡至 \LaTeX{} 的語法結構。
+
+本文各章節將逐步介紹 Markdown 常見語法與其在 \LaTeX{} 中的對應方式，並說明如何在排版過程中加入演算法（pseudo code）、表格（table）、圖片（figure）等常見結構，進一步引導讀者理解如交叉參照（\verb|\ref|、\verb|\nameref|）與文獻引用（\verb|\cite|）等功能的使用方式與排版效果。
+
+為了協助讀者快速理解整體架構，模板亦於下方列出各主要組成檔案的功能說明：
+
+\begin{itemize}
+  \item \textbf{environment.tex}：預先引入常用套件並設定整體排版風格。若需調整字型、行距或語言模式，可於此進行全域設定。請在 \texttt{main.tex} 中，於其他 \texttt{tex} 檔案引用之前先行載入。
+  
+  \item \textbf{\texttt{frontmatter.tex}}：管理論文前言部分，包括摘要、致謝、目錄、圖表清單等內容。各段落內容分別寫於 \texttt{front-matter/} 資料夾中，方便獨立撰寫與維護。
+  
+  \item \textbf{\texttt{main.tex}}：整體論文的編譯進入點，主要引入各章節（位於 \texttt{chapters/}）內容。在撰寫階段，若僅需編譯個別章節（例如 Chapter 2），建議將其他 \texttt{\textbackslash include} 指令暫時註解，能有效縮短編譯時間。撰寫章節時亦可先略過 \texttt{frontmatter} 區段。
+\end{itemize}
+
+本模板不僅提供一份可立即套用的排版起點，也試圖在說明與範例中，協助使用者逐步熟悉 \LaTeX{} 的語意標記邏輯，為後續學術文件的撰寫奠定基礎。

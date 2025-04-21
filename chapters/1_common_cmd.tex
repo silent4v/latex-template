@@ -1,0 +1,76 @@
+\chapter{編譯設定與常用指令}
+\label{chap1}
+
+編譯是一個常見的問題，這裡簡單描述一下：\texttt{\textbackslash input} 行為大概就是直接複製貼上那個 \texttt{.tex} 的內容，\texttt{\textbackslash include}比較像是鏈結進來，像是 C 的編譯器把 \texttt{"a.o"} 跟 \texttt{"b.o"} 合併起來的感覺。
+
+\section{基本差異比較}
+
+\begin{itemize}
+  \item \textbf{\texttt{\textbackslash include}}：用於章節級別的插入，會在插入前後自動加入換頁，適合用於引入整章內容（如第 1 章、第 2 章）。
+  \item \textbf{\texttt{\textbackslash input}}：用於片段內容的插入，如一段說明、一份表格或一段自訂命令，不會換頁。
+\end{itemize}
+
+\section{使用範例}
+
+假設我們有以下檔案結構：
+
+\begin{verbatim}
+main.tex
+chapters/
+├── chapter1.tex
+├── chapter2.tex
+└── sections/def.tex
+\end{verbatim}
+
+在 \texttt{main.tex} 中，我們這樣插入章節：
+
+\begin{verbatim}
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\end{verbatim}
+
+\texttt{chapter1.tex} 中，也可以插入子段落：\texttt{\textbackslash input\{sections/def.tex\}}
+
+\section{注意事項}
+
+\begin{itemize}
+  \item \texttt{\textbackslash include} 不能巢狀使用。你不能在 \texttt{chapter1.tex} 裡再寫 \texttt{\textbackslash include}。
+  \item \texttt{\textbackslash include} 支援 \texttt{\textbackslash includeonly} 指令，可以只編譯特定章節，加快草稿時的速度。(但是要放在 \texttt{\textbackslash begin\{document\}} Document 之前)
+  \item 檔案名稱不需要加上 \texttt{.tex} 副檔名。
+  \item 無論是 \texttt{\textbackslash include} 或 \texttt{\textbackslash input}，都必須寫在 \texttt{\textbackslash begin\{document\}} 之後。
+\end{itemize}
+
+\section{建議使用方式}
+
+\begin{itemize}
+  \item 使用 \texttt{\textbackslash include} 管理各章節（例如 \texttt{Chapter 1, 2, 3}）。
+  \item 在章節中，使用 \texttt{\textbackslash input} 引入表格、插圖說明、定義區塊、命令模板等。
+\end{itemize}
+
+\section{newcommand}
+
+最後解釋一下 \texttt{\textbackslash newcommand} 的用途，通常用法是：
+
+\begin{verbatim}
+\newcommand{ <name> }[]{ <defintion> }
+\newcommand{ <name> }{ <defintion> }
+\end{verbatim}
+
+在\LaTeX 中，\texttt{[]} 跟 \texttt{\{\}} 的差別是 \texttt{[]} 是可選的參數，\texttt{\{\}} 則為必要參數。
+
+以本文件來說，\texttt{main.tex} 最上方的：
+
+
+\begin{verbatim}
+\ documentclass[a4paper,12pt,fontset=none]{report}
+\end{verbatim}
+
+\texttt{[a4paper,12pt,fontset=none]}是完全可以省略的。\texttt{\textbackslash newcommand}行為大概是定義一個 Function，\texttt{frontmatter.tex}最上方就先定義好中文摘要、Abstract、致謝顯示的標題，並且在\texttt{acknowledge.tex} 有以下語法：
+
+\begin{verbatim}
+\chapter*{\enAbstractTitle}
+\addcontentsline{toc}{chapter}{\enAbstractTitle}
+\normalsize
+\end{verbatim}
+
+其行為就是：我想要宣告一個章節，並且這個章節不要編號，並且加入到目錄中(toc = table of content, 就是指目錄)。然後使用 \texttt{\textbackslash enAbstractTitle}把前面定義好的章節標題引入進來。

@@ -1,0 +1,159 @@
+\chapter{插入程式碼片段與演算法}
+\label{chap4}
+
+在技術與學術文件中，清晰展示程式碼與演算法邏輯是極為重要的排版需求。LaTeX 提供了多種高品質工具來實現此目標，其中以 \texttt{minted} 以及 \texttt{algorithm} 搭配 \texttt{algpseudocode} 最為常用。本章將說明兩者的使用方式與適用情境。
+
+\section{使用 \texttt{minted} 插入語法高亮程式碼}
+
+\texttt{minted} 套件利用 \texttt{Pygments} 提供跨語言的語法高亮，能準確保留縮排與語意格式，適合展示原始碼片段。
+
+\subsection*{使用前置設定}
+
+使用 \texttt{minted} 時，請於前言區引入套件：
+
+\begin{verbatim}
+\usepackage{minted}
+\usepackage{xcolor}
+\end{verbatim}    
+
+並在編譯時使用： \texttt{pdflatex -shell-escape main.tex}
+
+\subsection*{範例語法}
+
+\begin{verbatim}
+\begin{listing}[H]
+  \begin{minted}[<樣式設定>]{<選擇語言>}
+  <程式碼內容>
+  \end{minted}
+  \caption{<說明>}
+  \label{<標籤>}
+\end{listing}
+\end{verbatim}
+
+以下為一段 C++ 程式碼片段的範例：
+\begin{listing}[H]
+  \begin{minted}[fontsize=\small, linenos,style=vs, frame=lines, bgcolor=gray!1]{cpp}
+  #include <bits/stdc++.h>
+  using namespace std;
+  int binarySearch(int arr[], int low, int high, int x)
+  {
+      while (low <= high) {
+          int mid = low + (high - low) / 2;
+  
+          // Check if x is present at mid
+          if (arr[mid] == x)
+              return mid;
+  
+          // If x greater, ignore left half
+          if (arr[mid] < x)
+              low = mid + 1;
+  
+          // If x is smaller, ignore right half
+          else
+              high = mid - 1;
+      }
+  
+      // If we reach here, then element was not present
+      return -1;
+  }
+  \end{minted}
+  \caption{二分搜尋法}
+  \label{algo:BinarySearch}
+\end{listing}
+可選參數說明如下：
+
+\begin{itemize} 
+\item \texttt{style}：選擇風格，這裡使用 vs 風格
+\item \texttt{linenos}：顯示行號
+\item \texttt{frame=lines}：上下加框線
+\item \texttt{bgcolor=gray!1}：背景顏色
+\item \texttt{fontsize=\small}：字體大小
+\end{itemize}
+\section{使用 \texttt{algorithm} 插入演算法}
+
+若需表達邏輯流程、條件分支與步驟運算，建議使用 \texttt{algorithm} 套件搭配 \texttt{algpseudocode}，以排版接近 pseudo-code 形式展示演算法。
+
+\subsection*{前置設定}
+
+請在 preamble 加入以下指令：
+
+\begin{verbatim}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\end{verbatim}
+
+\subsection*{基本範例}
+
+\begin{verbatim}
+\begin{algorithm}
+    \caption{<說明>}
+    \label{<標籤>}
+    \begin{algorithmic}[1]
+    <算法描述>
+    \end{algorithmic}
+\end{algorithm}
+\end{verbatim}
+
+以下為一個遞迴階乘演算法的範例：
+
+\begin{algorithm}
+\caption{階乘演算法}
+\label{alg:factorial}
+\begin{algorithmic}[1]
+    \Function{Factorial}{n}
+        \If{$n = 0$}
+            \State \Return $1$
+        \Else
+            \State \Return $n \times \Call{Factorial}{n - 1}$
+        \EndIf
+    \EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\subsection*{語法元素說明}
+
+\begin{itemize}
+\item \texttt{Function, If, Return, Call} 為結構性語句
+\item \texttt{\textbackslash State} 用於表示單行操作
+\item \texttt{[1]} 可為演算法加上行號
+\end{itemize}
+
+\section{關於 \texttt{algorithm} 的 \texttt{\textbackslash label} 放置位置}
+
+在使用 \texttt{algorithm} 環境搭配 \texttt{caption} 產生標題與標號時，標籤（\verb|\label|）的放置位置會影響引用的正確性。這與一般 \texttt{figure} 或 \texttt{table} 環境略有不同。
+
+\texttt{\textbackslash label} 必須放在 \texttt{\textbackslash begin\{algorithm\}} 之後，且*緊接著放在 \texttt{\textbackslash caption} 之後才有效產生正確的標號引用*。只有 \texttt{\textbackslash begin\{algorithm\}} 在 begin 後直接設定 caption。figure, table, listing 都在最後的 \texttt{\textbackslash begin\{...\}} 前在設定 caption 與 label 就好。
+
+\begin{verbatim}
+\begin{algorithm}
+\caption{演算法名稱}
+\label{alg:example} % ← 要放在 caption 之後
+\begin{algorithmic}
+  ...
+\end{algorithmic}
+\end{algorithm}
+\end{verbatim}
+
+\paragraph{常見錯誤：}
+
+若將 \verb|\label| 放在 \verb|\begin{algorithm}| 之前，或放在 \verb|\begin{algorithmic}| 之後，將導致 \verb|\ref{alg:example}| 引用失效或標號錯誤。
+
+\paragraph{技術說明：}
+
+這是因為 LaTeX 中的浮動體（如 figure、table、algorithm）之編號是在 \verb|\caption| 處才產生的。若 \verb|\label| 放在 caption 之前，當時該浮動體尚未取得編號，導致標號參照錯誤。
+
+\paragraph{建議習慣：}
+
+為確保一致性與可維護性，建議一律將 \verb|\label| 緊接著放在 \verb|\caption| 後，如下所示：
+
+\begin{verbatim}
+\begin{algorithm}
+\caption{XXX 方法的流程}
+\label{alg:xxx}
+\begin{algorithmic}[1]
+  \State ...
+\end{algorithmic}
+\end{algorithm}
+\end{verbatim}
+
+如此能保證使用 \verb|\ref{alg:xxx}| 或 \verb|\autoref{alg:xxx}| 引用時正確顯示對應編號。

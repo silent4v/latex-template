@@ -1,29 +1,30 @@
 % 常用套件引入
-\usepackage{hyperref}               % 支持超連結和引用
-\usepackage{amsmath, amssymb}       % 高級數學符號
-\usepackage{booktabs}               % 表格橫線
-\usepackage{array}                  % 表格設定
-\usepackage{enumitem}               % 列表項目格式
-\usepackage{float}                  % 浮動環境控制
-\usepackage{listings}               % 程式碼顯示
-\usepackage{algorithm, algorithmic} % 演算法顯示
-\usepackage{multirow}               % 表格合併行
-\usepackage{subcaption}             % 圖片的子圖顯示
-\usepackage{xcolor}                 % 顏色設置
-\usepackage{graphicx}               % 插入圖片
-\usepackage{etoolbox}               % 提供 pretocmd 這類命令
-\usepackage{setspace}               % 行距設定
-\usepackage{ragged2e}               % 文本對齊控制（如 \justifying）
-\usepackage{tabularx}               % 自動調整欄寬的表格
-\usepackage{url}                    % 顯示網址連結
-\usepackage{ctex}                   % 中文支持
+\usepackage{amsmath, amssymb}         % 高級數學符號
+\usepackage{booktabs}                 % 表格橫線
+\usepackage{array}                    % 表格設定
+\usepackage{enumitem}                 % 列表項目格式
+\usepackage{float}                    % 浮動環境控制
+\usepackage{listing,listings}         % 程式碼顯示
+\usepackage{algorithm, algpseudocode} % 演算法顯示
+\usepackage{multirow}                 % 表格合併行
+\usepackage{subcaption}               % 圖片的子圖顯示
+\usepackage{xcolor}                   % 顏色設置
+\usepackage{graphicx}                 % 插入圖片
+\usepackage{etoolbox}                 % 提供 pretocmd 這類命令
+\usepackage{setspace}                 % 行距設定
+\usepackage{tabularx}                 % 自動調整欄寬的表格
+\usepackage{ragged2e}                 % 文本對齊控制（如 \justifying）
+\usepackage{url}                      % 顯示網址連結
+\usepackage{ctex}                     % 中文支持
+\usepackage{ulem}                     % 中文支持
+\usepackage{fancyvrb}                 
 
 % 浮水印
 \usepackage{background}
 \backgroundsetup{
-  scale=0.5,
+  scale=0.8,
   angle=0,
-  opacity=0.1,
+  opacity=0.05,
   contents={\includegraphics{ntust}}
 }
 
@@ -118,6 +119,14 @@
   {}{（\thecontentslabel)\quad}{}
   {\titlerule*[1pc]{.}\contentspage}
 
+  \titlecontents{subsection}[4em]
+  {}{\thecontentslabel.\quad}{}
+  {\titlerule*[1pc]{.}\contentspage}
+
+  \titlecontents{subsubsection}[6em]
+  {}{(\thecontentslabel)\quad}{}
+  {\titlerule*[1pc]{.}\contentspage}
+
   \renewcommand{\listfigurename}{\makebox[4cm][s]{\textbf{\LARGE{圖目錄}}}}
   \renewcommand{\listtablename}{\makebox[4cm][s]{\textbf{\LARGE{表目錄}}}}
   \renewcommand{\contentsname}{\makebox[4cm][s]{\textbf{\LARGE{目錄}}}}
@@ -156,15 +165,14 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyfoot[C]{\thepage}           % 頁碼置於下方中間
+\renewcommand{\headrulewidth}{0pt}
 
 % 圖表標題與編號設置
 \usepackage{caption}
-\captionsetup[figure]{labelfont=bf, labelsep=period, font=normalsize}
-\captionsetup[table]{labelfont=bf, labelsep=period, font=normalsize}
-\renewcommand{\thefigure}{\thechapter-\arabic{figure}}  % 圖編號如 1-1, 2-3
-\renewcommand{\thetable}{\thechapter-\arabic{table}}    % 表編號如 1-1, 2-3
-\numberwithin{figure}{chapter}                          % 圖按章節編號
-\numberwithin{table}{chapter}                           % 表按章節編號
+\captionsetup[figure]{labelfont=bf, labelsep=space, font=normalsize}
+\captionsetup[table]{labelfont=bf, labelsep=space, font=normalsize}
+\numberwithin{figure}{chapter}      % 圖按章節編號
+\numberwithin{table}{chapter}       % 表按章節編號
 \renewcommand{\figurename}{圖}
 \renewcommand{\tablename}{表}
 
@@ -175,20 +183,51 @@
   {\contentslabel{2em}}              % numbered entry format
   {}                                 % numberless entry format
   {\titlerule*[1pc]{.}\contentspage} % filler and page number format
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}  % 圖編號如 1-1, 2-3
+\renewcommand{\thetable}{\thechapter-\arabic{table}}    % 表編號如 1-1, 2-3
 
+% 程式碼高亮設定
+\usepackage{minted}
+\usepackage{chngcntr}
+\counterwithin{listing}{chapter}
+\captionsetup[listing]{labelfont=bf, labelsep=space, name=程式}
+\renewcommand{\thelisting}{\thechapter-\arabic{listing}}
+\renewcommand*{\listlistingname}{程式片段目錄}
+
+\setminted{
+  style=tango,
+  linenos,
+  breaklines,
+  fontsize=\small
+}
 
 % 自訂圖片插入指令（固定位置、置中、標題）
 \newcommand{\InsertFigure}[3][]{%
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{#2}
-    \caption{#3}
+    \includegraphics[width=\linewidth]{#2}
+    \caption[]{#3}
     \ifx&#1&%
     \else
       \label{#1}
     \fi
   \end{figure}
 }
+
+% 自訂圖片插入指令（固定位置、置中、標題）
+\newcommand{\InsertFigureWithNote}[4][]{%
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{#2}
+    \caption[]{#3\footnotemark}
+    \ifx&#1&%
+    \else
+      \label{#1}
+    \fi
+  \end{figure}
+  \footnotetext{#4}
+}
+
 
 % \InsertFigure{}{圖片路徑}{說明}
 % \InsertFigure[關聯]{圖片路徑}{說明}
@@ -210,3 +249,35 @@
   \end{table}
 }
 
+% 個人設定
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,      % TOC、section、ref 這些連結黑色
+  citecolor=black,      % \cite 用黑色
+  filecolor=black,      
+  urlcolor=blue,        % 只有網址使用藍色
+  pdfborder={0 0 0}     % 不畫紅框、藍框
+}
+
+
+\newcommand{\Image}[4][]{%
+  \begin{figure}[H]
+    \centering
+    \includegraphics[#1]{#3}
+    \caption{#4}
+    \label{fig:#2}
+  \end{figure}
+}
+
+\newcommand{\Frontmatter}{
+    \pagenumbering{roman}                 % 使用羅馬數字頁碼
+    \renewcommand{\thepage}{\Roman{page}} % 使用這行變成大寫羅馬數字
+    \setcounter{page}{1}
+}
+
+\newcommand{\Mainmatter}{
+
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+}

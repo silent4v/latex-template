@@ -1,0 +1,204 @@
+\chapter{圖片與表格語法}
+\label{chap3}
+
+在技術寫作與學術排版中，圖像與表格扮演著不可或缺的角色。Markdown 提供簡單直覺的語法以快速建立圖片與表格，而 LaTeX 則透過強大的浮動物件機制與格式控制，能夠呈現更高品質且可引用的版面效果。以下將介紹 Markdown 與 LaTeX 在圖片與表格處理上的語法差異與對應方法。
+
+\section{排版邏輯}
+
+在 LaTeX 中，圖與表格通常被視為「浮動體（float objects）」，也就是說它們不一定會出現在程式碼撰寫的確切位置，而是由排版引擎根據整體頁面美觀與空間安排自動決定擺放處。為此，LaTeX 提供一組定位參數，來「建議」浮動體的擺放位置：
+
+\begin{itemize}
+  \item \texttt{h}：放在此處（here）
+  \item \texttt{t}：放在頁面頂部（top）
+  \item \texttt{b}：放在頁面底部（bottom）
+  \item \texttt{p}：放在單獨一頁（page of floats）
+\end{itemize}
+
+這些選項可組合使用，例如 \texttt{[htbp]} 表示「優先嘗試此處放置，否則嘗試頁首、頁尾或浮動頁」。
+
+然而，若圖片或表格位置附近空間不足、頁面排版邏輯無法滿足條件，LaTeX 將自動「推遲」浮動體的呈現，導致圖表延後出現，有時甚至出現在相當遙遠的段落或頁面，造成閱讀混亂。
+
+\paragraph{強制位置：\texttt{[H]} 的使用}
+
+若希望圖表**完全出現在原地**，不讓 LaTeX 自動移動，需使用 \texttt{float} 套件，並改用 \texttt{[H]} 選項（注意是大寫 H）：
+
+\begin{verbatim}
+\usepackage{float} % 加在 preamble
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{example.png}
+  \caption{強制定位的圖片}
+  \label{fig:fixed}
+\end{figure}
+\end{verbatim}
+
+此寫法會完全抑制浮動特性，強制圖片出現在當前位置，適合用於教學文章、逐步範例說明、或需圖文密切配合之場合。
+
+\paragraph{使用 \texttt{[H]} 的注意事項}
+
+儘管 \texttt{[H]} 提供精準控制，但過度使用可能導致頁面佈局凌亂，因為 LaTeX 排版引擎會喪失自動美化整體頁面的能力。因此，建議僅在下列情況使用：
+
+\begin{itemize}
+  \item 教學文檔中，圖表需緊貼程式碼或說明。
+  \item 小型圖片或表格不影響頁面排版。
+  \item 實驗結果、逐步操作等需逐段插圖說明的場合。
+\end{itemize}
+
+綜合而言，\texttt{[htbp]} 提供彈性排版，而 \texttt{[H]} 則提供嚴格控制。依據文件性質與可接受的排版自由度選擇合適方式，將有助於產出既專業又可讀性良好的文檔。
+
+\section{插入圖片}
+
+Markdown 的圖片語法採用驚嘆號與中括號及小括號結合，語法如下：
+
+\begin{verbatim}
+![替代文字](圖片網址或路徑)
+\end{verbatim}
+
+在 LaTeX 中，插圖須透過 \texttt{graphicx} 套件輔助，建議使用 \texttt{figure} 浮動環境，範例如下：
+
+\begin{verbatim}
+\usepackage{graphicx} % 於環境加入
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{ntust.png}
+  \caption{範例圖片說明}
+  \label{fig:example}
+\end{figure}
+\end{verbatim}
+
+\Image[width=0.2\textwidth]{fig:example}{ntust.png}{範例圖片說明}
+
+
+上述語法說明如下：
+
+\begin{itemize}
+  \item \texttt{figure} 為浮動環境，控制圖像位置與標號。
+  \item \texttt{width=0.8\textbackslash textwidth} 控制寬度占比，可改用絕對尺寸。
+  \item \texttt{caption} 提供圖說，會自動產生圖表編號。
+  \item \texttt{label} 可搭配 \texttt{ref} 或 \texttt{autoref} 進行交叉引用。
+\end{itemize}
+
+建議圖片格式使用 PDF、EPS 等向量圖，若為點陣圖則解析度應高於 300 DPI，以確保印刷品質。
+
+\section{製作表格}
+
+Markdown 的表格語法簡潔，但僅支援基本資料排列與對齊：
+
+\begin{verbatim}
+| 名稱 | 數量 |
+|------|------|
+| 筆電 |  1   |
+| 滑鼠 |  2   |
+\end{verbatim}
+
+在 LaTeX 中，表格需透過 \texttt{tabular} 或 \texttt{table} 浮動環境撰寫。基本範例如下：
+
+\begin{verbatim}
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    名稱 & 數量 \\
+    \hline
+    筆電 & 1 \\
+    滑鼠 & 2 \\
+    \hline
+  \end{tabular}
+  \caption{設備清單表}
+  \label{tab:devices}
+\end{table}
+\end{verbatim}
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    名稱 & 數量 \\
+    \hline
+    筆電 & 1 \\
+    滑鼠 & 2 \\
+    \hline
+  \end{tabular}
+  \caption{設備清單表}
+  \label{tab:devices}
+\end{table}
+
+欄位格式代碼說明如下：
+
+\begin{itemize}
+  \item \texttt{l}：靠左對齊（left）
+  \item \texttt{c}：置中對齊（center）
+  \item \texttt{r}：靠右對齊（right）
+  \item 加上 \texttt{|} 表示加上垂直分隔線
+\end{itemize}
+
+如需進一步美化表格，推薦載入 \texttt{booktabs} 套件，使用 \texttt{\textbackslash toprule}、\texttt{\textbackslash midrule}、\texttt{\textbackslash bottomrule} 等專業排版指令取代 \texttt{\textbackslash hline}。
+
+\paragraph{延伸功能}
+
+若遇表格過寬或需要跨頁顯示，可結合以下套件進行擴展：
+
+\begin{itemize}
+  \item \texttt{tabularx}：支援自動欄寬調整。
+  \item \texttt{adjustbox}：可將表格縮放或旋轉。
+  \item \texttt{longtable}：支援跨頁表格排版。
+\end{itemize}
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lcr}
+    \toprule
+    設備名稱 & 數量 & 備註 \\
+    \midrule
+    筆電     & 1   & 公司配發 \\
+    滑鼠     & 2   & 自購 \\
+    鍵盤     & 1   & 自購 \\
+    \bottomrule
+  \end{tabular}
+  \caption{美化過的表格}
+  \label{tab:equipment}
+\end{table}
+
+\section{圖片與表格尺寸控制對照表}
+
+為提高排版彈性，LaTeX 提供多種尺寸單位與擴充指令供圖表配置使用。下表彙整常見語法與其用途：
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{@{}llp{7cm}@{}}
+    \toprule
+    \textbf{語法} & \textbf{單位} & \textbf{說明與用途} \\
+    \midrule
+    \verb|\textwidth| & 寬度 & 整體文字區域的寬度，通常用於全文圖表寬度統一 \\
+    \verb|\linewidth| & 寬度 & 當前區塊（如 minipage、list 環境）中的可用寬度 \\
+    \verb|width=...|   & 寬度 & 設定圖像或表格的最大寬度，單位可為 \verb|\textwidth|、\verb|\linewidth|、cm 等 \\
+    \verb|height=...|  & 高度 & 設定圖像或表格的最大高度，常與 \verb|keepaspectratio| 搭配使用以避免圖像變形 \\
+    \verb|keepaspectratio| & 旗標 & 用於圖像縮放時保持寬高比例，避免變形 \\
+    \verb|\arraystretch| & 倍數 & 用於拉高表格的行距，提升可讀性（預設值為 1.0） \\
+    \verb|adjustbox| 套件 & 縮放控制 & 可同時調整圖表的寬與高，並支援置中、旋轉等進階功能 \\
+    \bottomrule
+  \end{tabular}
+  \caption{LaTeX 中圖表尺寸控制常用語法總覽}
+  \label{tab:dimension-control}
+\end{table}
+
+下面筆者提供一個簡單的 \texttt{\textbackslash Image}指令，分別使用 \texttt{label,imagePath,caption}當作參數插入圖片。
+label的命名，個人習慣使用 \texttt{fig:} 當圖片的前綴；\texttt{tab:} 當表格的前綴。\texttt{\textbackslash label} 是一個很重要的語法，他可以建立一個可參考的位置。
+
+\begin{verbatim}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float} % 若使用 [H]
+
+% 定義 \Image 指令
+\newcommand{\Image}[4][]{%
+  \begin{figure}[H]
+    \centering
+    \includegraphics[#1]{#3}
+    \caption{#4}
+    \label{fig:#2}
+  \end{figure}
+}
+\end{verbatim}
