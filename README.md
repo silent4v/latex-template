@@ -5,31 +5,45 @@
 ## 專案結構
 
 ```txt
-├── main.tex                 # 論文主檔案（編譯入口）
-├── environment.tex          # 樣式與格式設定（字體、標題、浮水印等）
-├── titlepage.tex          # 論文資訊填寫區（姓名、題目、學位等）
-├── references.bib           # 參考文獻資料庫（BibTeX 格式）
-├── ntust.png                # 浮水印圖片（可自行更換）
-├── front-pages/             # 封面、摘要、致謝等前置章節
-│   ├── _frontpage.tex
-│   ├── zh_abstract.tex
-│   ├── en_abstract.tex
-│   └── acknowledge.tex
-├── main-pages/              # 正文各章節（五章）
-│   ├── 1_introduce.tex
-│   ├── 2_relative_work.tex
-│   ├── 3_method.tex
-│   ├── 4_result.tex
-│   └── 5_conclusion.tex
-└── figures/                 # 圖片資料夾
+│  environment.tex
+│  frontmatter.tex
+│  main.tex
+│  ntust.png
+│  README.md
+│  references.bib
+│  titlepage.tex
+│
+├─ appendix
+│      appendix.tex
+│      AppendixA.tex
+│      AppendixB.tex
+│
+├─ chapters
+│      1_common_cmd.tex
+│      2_markdown_syntax.tex
+│      3_tab_pic.tex
+│      4_algo_fragment.tex
+│      5_ref.tex
+│
+├─ figures
+│      overleaf.png
+│      template-arch.png
+│      template-flowchart.png
+│      titlepage.png
+│
+└─ front-matter
+        acknowledge.tex
+        en_abstract.tex
+        zh_abstract.tex
 ```
 
 ## 使用說明
 
-1. 開啟 `main.tex`
-2. 編譯方式建議使用 XeLaTeX（支援中文與字型）
-3. 修改 `titlepage.tex` 填入你的論文資訊
-4. 修改 `main-pages/` 內容為你的研究內容
+1. 編譯方式建議使用 XeLaTeX（支援中文與字型）
+2. 修改 `titlepage.tex` 填入你的論文資訊
+3. 修改 `front-matter/` 內容為正文前的摘要、致謝、目錄、口試申請書等內容
+4. 修改 `chapters/` 內容為你的研究章節
+5. 開啟 `main.tex`，載入你的論文章節
 
 本範本在 [Overleaf](https://www.overleaf.com/read/mbytjqbxmsws#d67b90) 可以預覽，無需安裝任何環境。
 
@@ -39,25 +53,24 @@
 
 ## 檔案範例
 
-- ✅ 中文與英文摘要
-- ✅ 中文章節編號格式（如：「第⼀章」、「（一）」）
-- ✅ 自動產生圖目錄、表目錄與參考文獻
-- ✅ 插入圖表（含浮水印圖示）
-- ✅ BibTeX 文獻管理，支援 RFC、IEEE、技術文件與網站引用
-- ✅ 中英文樣式切換（`\UseChineseStyle` 以及 `\UseEnglishStyle`）
-- ✅ printbibliography[heading=\<bibType>]
+在 Chapters 中，介紹了 LaTeX 的基礎語法：
+
+- [X] 如何引用其他 `.tex` 檔案並編譯
+- [X] 對應 Markdown 的一些基礎與法
+- [X] 圖片與表格範例
+- [X] 插入pseudo code演算法與程式範例
+- [X] ref與cite
+- [X] BibTeX 文獻管理，範例顯示 RFC、IEEE、技術文件與網站引用
+- [X] 中英文樣式切換（`\UseChineseStyle` 以及 `\UseEnglishStyle`）
   - *bibType* 可以使用 zhbib 輸出「參考文獻」，或是 enbib 輸出「References」
 
-絕大多數的你希望輸出的內容都可以在 `environment.tex` 客製化，目前的範例只是使用台科大的規格當作範例去設定，參考[台科大論文格式](https://etheses.lib.ntust.edu.tw/media/download/ed6370c8-7c81-11ee-b999-0242ac1f0806.pdf)
+絕大多數的想要修改輸出的內容都可以在 `environment.tex` 客製化，目前的範例只是使用台科大的規格當作範例去設定，參考[台科大論文格式](https://etheses.lib.ntust.edu.tw/media/download/ed6370c8-7c81-11ee-b999-0242ac1f0806.pdf)
 
 ## 注意事項
 
 - 範例中，圖片放於 `figures/` 目錄，建議使用 `.png`、`.jpg` 或 `.pdf` 格式
   - 如果希望區分不同章節用到的圖片，可以額外建立如 `figures/introduce`，`figures/method` 等資料夾
   - 對於其他素材，比方說你有 plot 的原始檔案，或是想要存放一些 log，也可以直接新增 `log`, `assets` 等資料夾
-- `\InsertTable` 與 `\InsertFigure` 為自定指令，用來插入表格跟圖片
-  - `\InsertTable` 滿容易壞掉的，畢竟表格編排起來比較複雜，如果真的有問題，建議還是自己撰寫表格的插入
-  - `\InsertFigure` 也只是提供一個快速插入圖片的指令，需要更詳盡的調整，還是得要自己處理
 - 若出現中文顯示問題，請確認使用 XeLaTeX 編譯器
 - 本模板使用 AR PL 字型系列，Overleaf 可正常支援，如需自訂字體請修改 `environment.tex`
 
@@ -142,12 +155,6 @@
   - 中文：`參考文獻`
   - 英文：`References`
 - 可使用 `\printbibliography[heading=zhbib]` 產生中文參考文獻區塊
-
-#### 標題區塊指令（封面/章節）
-
-- `\zhHeader{}`：建立中文標題並加入目錄
-- `\enHeader{}`：建立英文標題並加入目錄
-- 文字可自訂寬度與字級大小（預設為 `\LARGE`）
 
 ## 授權與貢獻
 
