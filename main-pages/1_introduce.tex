@@ -1,0 +1,62 @@
+\chapter{緒論}
+
+本章說明本論文所關注之主題背景、研究動機與目的，並介紹論文架構。範例內容以模擬性質撰寫，供後續論文撰寫者參考。
+
+\section{研究背景與動機}
+
+隨著資訊科技的發展，資料處理與系統設計日趨多元，學生在學術或實作研究中，往往需要具備清晰的撰寫結構與論證能力。為協助後續學生建立正確撰寫習慣，本論文提供一份符合研究所格式之 \LaTeX~撰寫範本。
+
+\section{研究目的}
+
+本論文範本旨在展示完整論文撰寫過程之結構範例，包含標題樣式設定、圖表插入、引用格式與段落撰寫方式。使用者可依照實際研究主題，將內容進行替換，快速完成具備學術格式之論文初稿。
+
+\section{研究方法概述}
+
+為呈現完整論文內容結構，範本內包含以下元素：
+
+\begin{itemize}
+  \item 多章節分頁與獨立檔案管理（如 \texttt{main-pages/} 路徑）
+  \item 插圖與表格（如下圖與下表所示）
+  \item 引用參考文獻（使用 \texttt{biblatex} 與 \texttt{biber}）
+\end{itemize}
+
+下方範例展示圖片插入格式：
+
+\InsertFigure[fig:template-arch]{figures/template-arch.png}{本論文範本之結構示意圖}
+
+圖~\ref{fig:template-arch} 為範本整體章節與檔案組織之視覺化示意，供後續使用者參考修改。
+
+以下展示一個簡單表格範例，說明圖表樣式與排版設定：
+
+\InsertTable[tab:sample]{ccc}{
+  \toprule
+  編號 & 名稱 & 結果 \\
+  \midrule
+  1 & 測試一 & 通過 \\
+  2 & 測試二 & 失敗 \\
+  \bottomrule
+}{格式元素對照表}
+
+\InsertTable[tab:sample2]{ccc}{
+  \toprule
+  項目 & 說明 & 範例 \\
+  \midrule
+  圖插入 & 使用 \texttt{\textbackslash InsertFigure} & 圖~\ref{fig:template-arch} \\
+  表插入 & 使用 \texttt{\textbackslash InsertTable} & 表 \\
+  文獻引用 & 使用 \texttt{\textbackslash cite\char`\{\char`\}} \\
+  \bottomrule
+}{格式元素對照表}
+
+\section{論文架構}
+
+本論文共分為五章，章節內容與重點如下：
+
+\begin{itemize}
+  \item 第一章：緒論，說明研究動機、目的與論文組織。
+  \item 第二章：相關研究，回顧與主題有關之技術與文獻。
+  \item 第三章：研究方法，描述實作內容、使用工具與設計架構。
+  \item 第四章：實驗結果，展示實作成果與測試結果。
+  \item 第五章：結論與未來工作，總結本論文並提出延伸方向。
+\end{itemize}
+
+本章內容為論文開端，應以清晰的邏輯呈現研究的「由來」與「脈絡」，為後續章節奠定基礎。

@@ -1,0 +1,212 @@
+% 常用套件引入
+\usepackage{hyperref}               % 支持超連結和引用
+\usepackage{amsmath, amssymb}       % 高級數學符號
+\usepackage{booktabs}               % 表格橫線
+\usepackage{array}                  % 表格設定
+\usepackage{enumitem}               % 列表項目格式
+\usepackage{float}                  % 浮動環境控制
+\usepackage{listings}               % 程式碼顯示
+\usepackage{algorithm, algorithmic} % 演算法顯示
+\usepackage{multirow}               % 表格合併行
+\usepackage{subcaption}             % 圖片的子圖顯示
+\usepackage{xcolor}                 % 顏色設置
+\usepackage{graphicx}               % 插入圖片
+\usepackage{etoolbox}               % 提供 pretocmd 這類命令
+\usepackage{setspace}               % 行距設定
+\usepackage{ragged2e}               % 文本對齊控制（如 \justifying）
+\usepackage{tabularx}               % 自動調整欄寬的表格
+\usepackage{url}                    % 顯示網址連結
+\usepackage{ctex}                   % 中文支持
+
+% 浮水印
+\usepackage{background}
+\backgroundsetup{
+  scale=0.5,
+  angle=0,
+  opacity=0.1,
+  contents={\includegraphics{ntust}}
+}
+
+% 標題指令
+\newcommand\zhHeader[1]{
+    \addcontentsline{toc}{chapter}{#1}
+    \begin{center}
+    \makebox[4cm][s]{\textbf{\LARGE{#1}}}\\
+    \end{center}
+}
+
+\newcommand\enHeader[1]{
+    \addcontentsline{toc}{chapter}{#1}
+    \begin{center}
+    \makebox[3cm][c]{\textbf{\LARGE{#1}}}\\
+    \end{center}
+}
+
+% 字體編碼與顏色
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage[UTF8,heading = true]{ctex}
+
+% 該網址包含 Overleaf 支援的字體
+% https://www.overleaf.com/learn/latex/Questions/Which_OTF_or_TTF_fonts_are_supported_via_fontspec
+\setmainfont{Times New Roman}
+\setCJKmainfont[AutoFakeBold=3]{AR PL UKai TW}
+\setCJKmonofont{AR PL UKai TW}
+\XeTeXlinebreaklocale "zh" %這兩行一定要加，中文才能自動換行 
+\XeTeXlinebreakskip = 0pt plus 1pt
+\usepackage{xcolor} % 支持顏色
+\color{black}       % 設置字體顏色為黑色
+
+% 版面配置
+\usepackage[a4paper, top=3cm, bottom=2cm, left=3cm, right=3cm]{geometry}
+
+% 行距＆換行 設定
+\usepackage{setspace}
+\onehalfspacing % 設置行距為 1.5 倍行高
+
+% 摘要與標題設置
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\bfseries\fontsize{24pt}{24pt}\selectfont}{\chaptername\ \thechapter}{20pt}{\bfseries\fontsize{20pt}{24pt}\selectfont}
+  \titlespacing*{\chapter}{0pt}{-20pt}{40pt} % 題目與標題空間設置
+
+% 字體大小與標題設置
+\usepackage{titlesec}
+\usepackage{zhnumber} % 阿拉伯數字改成中文數字，英文論文把 zhnumber
+\makeatletter
+\@addtoreset{section}{chapter}
+\@addtoreset{subsection}{section}
+\@addtoreset{subsubsection}{subsection}
+\@addtoreset{paragraph}{subsubsection}
+\pretocmd{\chapter}{\setcounter{section}{0}}{}{}
+
+% Refenence 設定
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\addbibresource{references.bib}
+\defbibheading{zhbib}{
+  \zhHeader{參考文獻}
+}
+\defbibheading{enbib}{
+  \enHeader{References}
+}
+
+% 段落樣式
+\newcommand{\UseChineseStyle}{
+  % 中文論文
+  \renewcommand{\thesection}{\zhnumber{\arabic{section}}}
+  \renewcommand{\thesubsection}{\arabic{subsection}}
+  \renewcommand{\thesubsubsection}{\arabic{subsubsection}}
+  \renewcommand{\theparagraph}{\arabic{paragraph}}
+
+  \titleformat{\chapter}[block] % "章(chapter)"標題 20pt，置中
+    {\centering\bfseries\fontsize{20pt}{20pt}\selectfont}
+    {第\,\zhnumber{\thechapter}\,章}{20pt}{\centering}
+  
+  \titleformat{\section}[block] % "節(section)"標題 18pt，置中
+    {\raggedright\bfseries\fontsize{18pt}{18pt}\selectfont}
+    {（\thesection）}{12pt}{}
+  
+  \titleformat{\subsection}[block] % "小節(subsection)"標題 16pt，左對齊
+    {\raggedright\bfseries\fontsize{16pt}{16pt}\selectfont}
+    {\arabic{subsection}.}{12pt}{}
+    
+  \titlecontents{chapter}[0pt]
+  {\bfseries}{第\,\zhnumber{\thecontentslabel}\,章\quad}{}
+  {\titlerule*[1pc]{.}\contentspage}
+
+  \titlecontents{section}[2em]
+  {}{（\thecontentslabel)\quad}{}
+  {\titlerule*[1pc]{.}\contentspage}
+
+  \renewcommand{\listfigurename}{\makebox[4cm][s]{\textbf{\LARGE{圖目錄}}}}
+  \renewcommand{\listtablename}{\makebox[4cm][s]{\textbf{\LARGE{表目錄}}}}
+  \renewcommand{\contentsname}{\makebox[4cm][s]{\textbf{\LARGE{目錄}}}}
+}
+
+\newcommand{\UseEnglishStyle}{
+  \renewcommand{\thechapter}{\arabic{chapter}}
+  \renewcommand{\thesection}{\thechapter.\arabic{section}}
+  \renewcommand{\thesubsection}{\thechapter.\arabic{section}.\arabic{subsection}}
+  \renewcommand{\thesubsubsection}{\thechapter.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+
+
+  \titleformat{\chapter}[block]
+    {\centering\bfseries\fontsize{20pt}{20pt}\selectfont}
+    {\thechapter.}{20pt}{\centering}
+
+  \titleformat{\section}[block]
+    {\raggedright\bfseries\fontsize{18pt}{18pt}\selectfont}
+    {\thesection}{12pt}{}
+
+  \titleformat{\subsection}[block]
+    {\raggedright\bfseries\fontsize{16pt}{16pt}\selectfont}
+    {\thesubsection}{12pt}{}
+
+  \titleformat{\subsubsection}[block]
+    {\raggedright\bfseries\fontsize{14pt}{14pt}\selectfont}
+    {\thesubsubsection}{12pt}{}
+
+  \renewcommand{\listfigurename}{List of Figures}
+  \renewcommand{\listtablename}{List of Tables}
+  \renewcommand{\contentsname}{Contents}
+}
+
+% 頁碼設置
+\usepackage{fancyhdr}             % 頁眉頁腳設置
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}           % 頁碼置於下方中間
+
+% 圖表標題與編號設置
+\usepackage{caption}
+\captionsetup[figure]{labelfont=bf, labelsep=period, font=normalsize}
+\captionsetup[table]{labelfont=bf, labelsep=period, font=normalsize}
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}  % 圖編號如 1-1, 2-3
+\renewcommand{\thetable}{\thechapter-\arabic{table}}    % 表編號如 1-1, 2-3
+\numberwithin{figure}{chapter}                          % 圖按章節編號
+\numberwithin{table}{chapter}                           % 表按章節編號
+\renewcommand{\figurename}{圖}
+\renewcommand{\tablename}{表}
+
+\usepackage{titletoc}
+\titlecontents{tableofcontents}
+  [0pt]                              % 縮排
+  {\bfseries}                        % above code
+  {\contentslabel{2em}}              % numbered entry format
+  {}                                 % numberless entry format
+  {\titlerule*[1pc]{.}\contentspage} % filler and page number format
+
+
+% 自訂圖片插入指令（固定位置、置中、標題）
+\newcommand{\InsertFigure}[3][]{%
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{#2}
+    \caption{#3}
+    \ifx&#1&%
+    \else
+      \label{#1}
+    \fi
+  \end{figure}
+}
+
+% \InsertFigure{}{圖片路徑}{說明}
+% \InsertFigure[關聯]{圖片路徑}{說明}
+
+% 自訂表格插入指令（固定位置、置中、標題）
+\newcommand{\InsertTable}[4][]{%
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{#2}
+      \toprule
+      #3
+      \bottomrule
+    \end{tabular}
+    \caption{#4}
+    \ifx\\#1\\%
+    \else
+      \label{#1}
+    \fi
+  \end{table}
+}
+

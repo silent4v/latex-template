@@ -1,0 +1,82 @@
+% 論文資訊
+
+%% 日期
+\newcommand{\zhYear}{九九九}
+\newcommand{\zhMonth}{九}
+\newcommand{\zhDate}{九}
+
+%% 論文相關資訊
+\newcommand{\university}{國立臺灣科技大學}
+\newcommand{\department}{資訊工程所}
+\newcommand{\thesisType}{碩士學位論文}
+\newcommand{\student}{你的名字}
+\newcommand{\studentID}{M12345678}
+\newcommand{\advisor}{OOO}
+
+% 字體由大到小分別是 \Huge \LARGE \Large \normalsize
+\newcommand{\zhThesisFontSize}{\Huge}      % 中文題目大小
+\newcommand{\zhThesis}{論文的中文題目}
+\newcommand{\enThesisFontSize}{\LARGE}      % 英文題目大小
+\newcommand{\enThesis}{
+    English title of the paper English title of the paperEnglish title of the paperEnglish title of the paperEnglish title of the paperEnglish title of the paperEnglish title of the paperEnglish title of the paperEnglish title of the paperEnglish title of the
+}
+
+\newcommand{\InfoLine}[2]{%
+  \makebox[3cm][s]{\LARGE #1}%
+  {\LARGE ：}
+  \makebox[3cm][s]{\LARGE #2}%
+  \par\vspace{0.5cm}%
+}
+
+
+\newcommand{\makeTitlepage}{
+    \begin{titlepage}
+    \centering
+    
+    % ===== 頂部 =====
+    \vspace*{1cm}
+    \begin{minipage}{0.2\textwidth}
+        \includegraphics[width=\textwidth]{ntust.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.75\textwidth}
+        \centering
+        % 學校 & 系所
+        {\Huge \university} \\[0.5cm]
+        {\Huge \department} \\[0.5cm]
+    \end{minipage}
+
+    \vspace{1cm}
+    \rule{\textwidth}{2pt}
+    \vspace{1cm}
+
+
+    % ===== 論文資訊 =====
+    \makebox[8cm][s]{\Huge\textbf{\thesisType}}\\[1cm]
+
+    {\zhThesisFontSize \zhThesis} \\[1cm]
+
+    \begin{minipage}[c]{0.9\textwidth}
+        \centering
+        {\enThesisFontSize
+            \begin{spacing}{1.5}
+                \textit{\enThesis}
+            \end{spacing}}
+    \end{minipage}
+
+
+    \vfill
+
+    % ===== 作者區塊 =====
+    \begin{minipage}{0.9\textwidth}
+        \begin{center}
+            \InfoLine{研究生}{\student}
+            \InfoLine{學號}{\studentID}
+            \InfoLine{指導教授}{\advisor}
+        \end{center}
+    \end{minipage}
+
+    \vspace{0.5cm}
+    {\LARGE 中華民國 {\zhYear} 年 {\zhMonth} 月 {\zhDate} 日 }
+    \end{titlepage}
+}
