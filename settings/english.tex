@@ -1,0 +1,46 @@
+% !TeX root = main.tex
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\renewcommand{\theparagraph}{\arabic{paragraph}}
+
+% 英文等寬字型（可選 Consolas、Courier New）
+\setmonofont[
+  Path = fonts/,
+  UprightFont = *
+]{NotoSansMono-Regular.ttf}
+
+% 目錄設定
+\titlecontents{chapter}[0pt]
+{\bfseries}{\thecontentslabel.\quad}{}
+{\titlerule*[1pc]{.}\contentspage}
+
+\titlecontents{section}[2em]
+{}{\thecontentslabel\quad}{}
+{\titlerule*[1pc]{.}\contentspage}
+
+\titlecontents{subsection}[4em]
+{}{\thecontentslabel.\quad}{}
+{\titlerule*[1pc]{.}\contentspage}
+
+\titlecontents{subsubsection}[6em]
+{}{(\thecontentslabel)\quad}{}
+{\titlerule*[1pc]{.}\contentspage}
+
+% "章(chapter)"標題 20pt，置中
+\titleformat{\chapter}[block]
+{\centering\bfseries\fontsize{20pt}{20pt}\selectfont}
+{\thechapter.}{20pt}{\centering}
+
+% "節(section)"標題 18pt，左對齊
+\titleformat{\section}[block]
+{\raggedright\bfseries\fontsize{18pt}{18pt}\selectfont}
+{\thesection}{12pt}{}
+
+% "小節(subsection)"標題 16pt，左對齊
+\titleformat{\subsection}[block]
+{\raggedright\bfseries\fontsize{16pt}{16pt}\selectfont}
+{\thesubsection}{12pt}{}
+
+\defbibheading{bib}{References}

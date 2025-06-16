@@ -1,16 +1,22 @@
-\newcommand{\ackTitle}{致謝}
+\setcounter{page}{1}
+\pagenumbering{Roman}
+\pagestyle{plain}
+
 \newcommand{\zhAbstractTitle}{中文摘要}
 \newcommand{\enAbstractTitle}{Abstract}
+\newcommand{\ackTitle}{致謝}
 
-\Frontmatter
-\input{front-matter/acknowledge}
 \input{front-matter/zh_abstract}
 \input{front-matter/en_abstract}
+\input{front-matter/acknowledge}
 
 % 索引建立
 
-                
 \tableofcontents    % 章節目錄
 \listoffigures      % 圖片目錄
 \listoftables       % 表格目錄
-\listoflistings     % Listing 目錄，比方說演算法、程式片段等小插入
+{                   % 程式索引目錄
+  \renewcommand{\baselinestretch}{2}
+  \normalsize % 必須呼叫來刷新行距
+  \listof{listing}{程式碼清單目錄}
+}

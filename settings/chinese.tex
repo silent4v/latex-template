@@ -1,0 +1,64 @@
+% !TeX root = main.tex
+% 引入中文套件
+\usepackage[UTF8,heading = false]{ctex}     % 相關設定
+\XeTeXlinebreaklocale "zh" %這兩行一定要加，中文才能自動換行 
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+% 中文主體字型：思源宋體繁體
+\setCJKmainfont[
+  Path = fonts/,
+  UprightFont = *
+]{AR_PL_KaitiM_Big5.ttf}
+
+% 中文等寬字型（支援 CJK，VF 變數字型）
+\setCJKmonofont[
+  Path = fonts/,
+  UprightFont = *,
+  RawFeature = {+wght=400}
+]{NotoSansMonoCJK_TC.otf}
+
+%% 標題設置
+
+\renewcommand{\thesection}{\zhnumber{\arabic{section}}}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+\renewcommand{\thesubsubsection}{(\arabic{subsubsection})}
+\renewcommand{\theparagraph}{\arabic{paragraph}}
+
+% 目錄設定
+\titlecontents{chapter}[0pt]
+{\bfseries}{第\zhnumber{\thecontentslabel}章\quad}{}
+{\titlerule*[1pc]{.}\contentspage}
+
+\titlecontents{section}[2em]
+{}{\thecontentslabel 、\quad}{}
+{\titlerule*[1pc]{.}\contentspage}
+
+\titlecontents{subsection}[4em]
+{}{(\zhnumber{\thecontentslabel})\quad}{}
+{\titlerule*[1pc]{.}\contentspage}
+
+
+% 標題設定
+\titleformat{\chapter}[block]   % "章(chapter)"標題 20pt，置中
+{\centering\bfseries\fontsize{20pt}{20pt}\selectfont}
+{第\zhnumber{\thechapter}章}{20pt}{\centering}
+
+\titleformat{\section}[hang]    % "節(section)"標題 18pt
+{\raggedright\bfseries\fontsize{18pt}{18pt}\selectfont}
+{\thesection、}{12pt}{}
+
+\titleformat{\subsection}[hang] % "小節(subsection)"標題 16pt
+{\raggedright\bfseries\fontsize{16pt}{16pt}\selectfont}
+{(\zhnumber{\arabic{subsection}})}{12pt}{}
+
+\renewcommand{\contentsname}{\makebox[4cm][s]{\textbf{\LARGE{目錄}}}}
+\renewcommand{\listfigurename}{\makebox[4cm][s]{\textbf{\LARGE{圖目錄}}}}
+\renewcommand{\listtablename}{\makebox[4cm][s]{\textbf{\LARGE{表目錄}}}}
+\renewcommand{\figurename}{圖}
+\renewcommand{\tablename}{表}
+\renewcommand{\listoflistings}{\chapter*{程式碼清單目錄}}
+\captionsetup[listing]{labelfont=bf, labelsep=space, name=範例代碼}
+
+
+
+\defbibheading{bib}{\zhHeader{參考文獻}}

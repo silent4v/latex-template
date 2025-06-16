@@ -1,27 +1,36 @@
-% 常用套件引入
-\usepackage{amsmath, amssymb}         % 高級數學符號
-\usepackage{booktabs}                 % 表格橫線
-\usepackage{array}                    % 表格設定
-\usepackage{enumitem}                 % 列表項目格式
-\usepackage{float}                    % 浮動環境控制
-\usepackage{listing,listings}         % 程式碼顯示
-\usepackage{algorithm, algpseudocode} % 演算法顯示
-\usepackage{multirow}                 % 表格合併行
-\usepackage{subcaption}               % 圖片的子圖顯示
-\usepackage{xcolor}                   % 顏色設置
-\usepackage{graphicx}                 % 插入圖片
-\usepackage{etoolbox}                 % 提供 pretocmd 這類命令
-\usepackage{setspace}                 % 行距設定
-\usepackage{tabularx}                 % 自動調整欄寬的表格
-\usepackage{ragged2e}                 % 文本對齊控制（如 \justifying）
-\usepackage{url}                      % 顯示網址連結
-\usepackage{ctex}                     % 中文支持
-\usepackage{appendix}
-\usepackage{ulem}                     
-\usepackage{fancyvrb}                 
+% !TeX root = main.tex
+% === 功能性套件 ===
+\usepackage{etoolbox} % 提供 pretocmd 等條件與補丁指令
+\usepackage{chngcntr} % 控制計數器（如圖表獨立編號）
 
-% 浮水印
-\usepackage{background}
+% === 字體、顏色與排版輔助 ===
+\usepackage{epigraph} % 引用文字
+\usepackage{fontspec} % 系統字型使用
+\usepackage{xcolor}   % 顏色設置
+\usepackage{ragged2e} % 文本對齊控制（如 \justifying）
+\usepackage{xeCJK}    % CJK 字體相關
+%% 該網址包含 Overleaf 支援的字體
+% https://www.overleaf.com/learn/latex/Questions/Which_OTF_or_TTF_fonts_are_supported_via_fontspec
+\setmainfont{Times New Roman}
+\color{black}       % 設置字體顏色為黑色
+
+% === 版面與格式調整 ===
+\usepackage[a4paper]{geometry} % 邊界設定
+\usepackage{setspace}          % 行距設定
+\usepackage{titlesec}          % 標題格式控制
+\usepackage{titletoc}          % 目錄樣式控制
+\usepackage{fancyhdr}          % 頁眉頁腳設置
+\usepackage{zhnumber}          % 中文數字格式（章節用）
+\usepackage{background}        % 背景控制
+
+%% 題目與標題空間設置
+\titleformat{\chapter}[display]{
+  \bfseries\fontsize{24pt}{24pt}\selectfont}
+  {\chaptername\ \thechapter}{20pt}
+  {\bfseries\fontsize{20pt}{24pt}\selectfont}
+\titlespacing*{\chapter}{0pt}{-20pt}{40pt} 
+
+%% 浮水印
 \backgroundsetup{
   scale=0.8,
   angle=0,
@@ -29,52 +38,17 @@
   contents={\includegraphics{ntust}}
 }
 
-% 標題指令
-\newcommand\zhHeader[1]{
-    \addcontentsline{toc}{chapter}{#1}
-    \begin{center}
-    \makebox[4cm][s]{\textbf{\LARGE{#1}}}\\
-    \end{center}
+%% 版型
+\newgeometry{
+  top=3cm,
+  left=3cm,
+  right=3cm,
+  bottom=2cm
 }
 
-\newcommand\enHeader[1]{
-    \addcontentsline{toc}{chapter}{#1}
-    \begin{center}
-    \makebox[3cm][c]{\textbf{\LARGE{#1}}}\\
-    \end{center}
-}
-
-% 字體編碼與顏色
-\usepackage{fontspec}
-\usepackage{xeCJK}
-\usepackage[UTF8,heading = true]{ctex}
-
-% 該網址包含 Overleaf 支援的字體
-% https://www.overleaf.com/learn/latex/Questions/Which_OTF_or_TTF_fonts_are_supported_via_fontspec
-\setmainfont{Times New Roman}
-\setCJKmainfont[AutoFakeBold=3]{AR PL UKai TW}
-\setCJKmonofont{AR PL UKai TW}
-\XeTeXlinebreaklocale "zh" %這兩行一定要加，中文才能自動換行 
-\XeTeXlinebreakskip = 0pt plus 1pt
-\usepackage{xcolor} % 支持顏色
-\color{black}       % 設置字體顏色為黑色
-
-% 版面配置
-\usepackage[a4paper, top=3cm, bottom=2cm, left=3cm, right=3cm]{geometry}
-
-% 行距＆換行 設定
-\usepackage{setspace}
 \onehalfspacing % 設置行距為 1.5 倍行高
 
-% 摘要與標題設置
-\usepackage{titlesec}
-\titleformat{\chapter}[display]
-  {\bfseries\fontsize{24pt}{24pt}\selectfont}{\chaptername\ \thechapter}{20pt}{\bfseries\fontsize{20pt}{24pt}\selectfont}
-  \titlespacing*{\chapter}{0pt}{-20pt}{40pt} % 題目與標題空間設置
-
-% 字體大小與標題設置
-\usepackage{titlesec}
-\usepackage{zhnumber} % 阿拉伯數字改成中文數字，英文論文把 zhnumber
+%% 每個章節 Counter Reset
 \makeatletter
 \@addtoreset{section}{chapter}
 \@addtoreset{subsection}{section}
@@ -82,119 +56,53 @@
 \@addtoreset{paragraph}{subsubsection}
 \pretocmd{\chapter}{\setcounter{section}{0}}{}{}
 
-% Refenence 設定
-\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
-\addbibresource{references.bib}
-\defbibheading{zhbib}{
-  \zhHeader{參考文獻}
-}
-\defbibheading{enbib}{
-  \enHeader{References}
-}
-
-% 段落樣式
-\newcommand{\UseChineseStyle}{
-  % 中文論文
-  \renewcommand{\thesection}{\zhnumber{\arabic{section}}}
-  \renewcommand{\thesubsection}{\arabic{subsection}}
-  \renewcommand{\thesubsubsection}{\arabic{subsubsection}}
-  \renewcommand{\theparagraph}{\arabic{paragraph}}
-
-  \titleformat{\chapter}[block] % "章(chapter)"標題 20pt，置中
-    {\centering\bfseries\fontsize{20pt}{20pt}\selectfont}
-    {第\,\zhnumber{\thechapter}\,章}{20pt}{\centering}
-  
-  \titleformat{\section}[block] % "節(section)"標題 18pt，置中
-    {\raggedright\bfseries\fontsize{18pt}{18pt}\selectfont}
-    {（\thesection）}{12pt}{}
-  
-  \titleformat{\subsection}[block] % "小節(subsection)"標題 16pt，左對齊
-    {\raggedright\bfseries\fontsize{16pt}{16pt}\selectfont}
-    {\arabic{subsection}.}{12pt}{}
-    
-  \titlecontents{chapter}[0pt]
-  {\bfseries}{第\,\zhnumber{\thecontentslabel}\,章\quad}{}
-  {\titlerule*[1pc]{.}\contentspage}
-
-  \titlecontents{section}[2em]
-  {}{（\thecontentslabel)\quad}{}
-  {\titlerule*[1pc]{.}\contentspage}
-
-  \titlecontents{subsection}[4em]
-  {}{\thecontentslabel.\quad}{}
-  {\titlerule*[1pc]{.}\contentspage}
-
-  \titlecontents{subsubsection}[6em]
-  {}{(\thecontentslabel)\quad}{}
-  {\titlerule*[1pc]{.}\contentspage}
-
-  \renewcommand{\listfigurename}{\makebox[4cm][s]{\textbf{\LARGE{圖目錄}}}}
-  \renewcommand{\listtablename}{\makebox[4cm][s]{\textbf{\LARGE{表目錄}}}}
-  \renewcommand{\contentsname}{\makebox[4cm][s]{\textbf{\LARGE{目錄}}}}
-}
-
-\newcommand{\UseEnglishStyle}{
-  \renewcommand{\thechapter}{\arabic{chapter}}
-  \renewcommand{\thesection}{\thechapter.\arabic{section}}
-  \renewcommand{\thesubsection}{\thechapter.\arabic{section}.\arabic{subsection}}
-  \renewcommand{\thesubsubsection}{\thechapter.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
-
-
-  \titleformat{\chapter}[block]
-    {\centering\bfseries\fontsize{20pt}{20pt}\selectfont}
-    {\thechapter.}{20pt}{\centering}
-
-  \titleformat{\section}[block]
-    {\raggedright\bfseries\fontsize{18pt}{18pt}\selectfont}
-    {\thesection}{12pt}{}
-
-  \titleformat{\subsection}[block]
-    {\raggedright\bfseries\fontsize{16pt}{16pt}\selectfont}
-    {\thesubsection}{12pt}{}
-
-  \titleformat{\subsubsection}[block]
-    {\raggedright\bfseries\fontsize{14pt}{14pt}\selectfont}
-    {\thesubsubsection}{12pt}{}
-
-  \renewcommand{\listfigurename}{List of Figures}
-  \renewcommand{\listtablename}{List of Tables}
-  \renewcommand{\contentsname}{Contents}
-}
-
-% 頁碼設置
-\usepackage{fancyhdr}             % 頁眉頁腳設置
+%% 頁碼設定
 \pagestyle{fancy}
 \fancyhf{}
-\fancyfoot[C]{\thepage}           % 頁碼置於下方中間
-\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage} % 頁碼置於下方中間
 
-% 圖表標題與編號設置
-\usepackage{caption}
-\captionsetup[figure]{labelfont=bf, labelsep=space, font=normalsize}
-\captionsetup[table]{labelfont=bf, labelsep=space, font=normalsize}
-\numberwithin{figure}{chapter}      % 圖按章節編號
-\numberwithin{table}{chapter}       % 表按章節編號
-\renewcommand{\figurename}{圖}
-\renewcommand{\tablename}{表}
-
-\usepackage{titletoc}
+%% 目錄的格式
 \titlecontents{tableofcontents}
   [0pt]                              % 縮排
   {\bfseries}                        % above code
   {\contentslabel{2em}}              % numbered entry format
   {}                                 % numberless entry format
   {\titlerule*[1pc]{.}\contentspage} % filler and page number format
-\renewcommand{\thefigure}{\thechapter-\arabic{figure}}  % 圖編號如 1-1, 2-3
-\renewcommand{\thetable}{\thechapter-\arabic{table}}    % 表編號如 1-1, 2-3
 
-% 程式碼高亮設定
-\usepackage{minted}
-\usepackage{chngcntr}
+% === 數學與符號 ===
+\usepackage{ amsmath, amssymb} % 高級數學符號
+
+% === 表格處理 ===
+\usepackage{longtable}  % 跨頁表格
+\usepackage{booktabs}   % 表格橫線
+\usepackage{multirow}   % 表格合併行
+\usepackage{array}      % 表格設定
+\usepackage{tabularx}   % 自動調整欄寬的表格
+\usepackage{pifont}     % for checkmark
+% === 列表與項目編排 ===
+\usepackage{enumitem}   % 列表項目格式
+
+% === 浮動體控制與圖文插入 ===
+\usepackage{float}      % 浮動環境控制
+\usepackage{graphicx}   % 插入圖片
+\usepackage{subcaption} % 圖片的子圖顯示
+\usepackage{longtable} % 長表格
+\usepackage{caption}    % 圖片標題設定
+\captionsetup[figure]{labelfont=bf, labelsep=space, font=normalsize}
+\captionsetup[table]{labelfont=bf, labelsep=space, font=normalsize}
+\numberwithin{figure}{chapter}      % 圖按章節編號
+\numberwithin{table}{chapter}       % 表按章節編號
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}  % 圖編號如 1-1, 2-3
+\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}    % 表編號如 1-1, 2-3
+
+% === 程式碼與演算法 ===
+\usepackage{listings} % 程式碼顯示（基本）
+\usepackage{minted}   % 使用 pygments 的高亮程式碼顯示
+\usepackage{fancyvrb} % 進階程式碼排版（Verbatim）
+\usepackage{algorithm, algpseudocode} % 演算法顯示
 \counterwithin{listing}{chapter}
-\captionsetup[listing]{labelfont=bf, labelsep=space, name=程式}
-\renewcommand{\thelisting}{\thechapter-\arabic{listing}}
-\renewcommand*{\listlistingname}{程式片段目錄}
-
+\renewcommand{\thelisting}{\arabic{chapter}-\arabic{listing}}
+%\renewcommand*{\listlistingname}{程式片段目錄}
 \setminted{
   style=tango,
   linenos,
@@ -202,56 +110,13 @@
   fontsize=\small
 }
 
-% 自訂圖片插入指令（固定位置、置中、標題）
-\newcommand{\InsertFigure}[3][]{%
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{#2}
-    \caption[]{#3}
-    \ifx&#1&%
-    \else
-      \label{#1}
-    \fi
-  \end{figure}
-}
+% === 參考文獻管理、連結與網址 ===
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex} % 文獻引用
+\usepackage{url}      % 顯示網址連結
+\usepackage{hyperref} % 超連結相關
 
-% 自訂圖片插入指令（固定位置、置中、標題）
-\newcommand{\InsertFigureWithNote}[4][]{%
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{#2}
-    \caption[]{#3\footnotemark}
-    \ifx&#1&%
-    \else
-      \label{#1}
-    \fi
-  \end{figure}
-  \footnotetext{#4}
-}
-
-
-% \InsertFigure{}{圖片路徑}{說明}
-% \InsertFigure[關聯]{圖片路徑}{說明}
-
-% 自訂表格插入指令（固定位置、置中、標題）
-\newcommand{\InsertTable}[4][]{%
-  \begin{table}[H]
-    \centering
-    \begin{tabular}{#2}
-      \toprule
-      #3
-      \bottomrule
-    \end{tabular}
-    \caption{#4}
-    \ifx\\#1\\%
-    \else
-      \label{#1}
-    \fi
-  \end{table}
-}
-
-% 個人設定
-\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+%% 加入參考檔案
+\addbibresource{references.bib}
 \hypersetup{
   colorlinks=true,
   linkcolor=black,      % TOC、section、ref 這些連結黑色
@@ -261,24 +126,63 @@
   pdfborder={0 0 0}     % 不畫紅框、藍框
 }
 
+% === 個人常用指令封裝 ===
 
-\newcommand{\Image}[4][]{%
+% \Image[<圖片參數>]{<Label>}{<ImagePath>}{<Caption>}
+\newcommand{\Image}[4][width=\linewidth]{
   \begin{figure}[H]
     \centering
-    \includegraphics[#1]{#3}
+    \includegraphics[#1]{figures/#3}
     \caption{#4}
-    \label{fig:#2}
+    \label{#2}
   \end{figure}
 }
 
-\newcommand{\Frontmatter}{
-    \pagenumbering{roman}                 % 使用羅馬數字頁碼
-    \renewcommand{\thepage}{\Roman{page}} % 使用這行變成大寫羅馬數字
-    \setcounter{page}{1}
+% \Table[4][]{}
+\newcommand{\Table}[4][]{
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{#1}
+      \toprule
+      #3
+      \bottomrule
+    \end{tabular}
+    \caption{#4}
+    \label{#2}
+  \end{table} 
 }
 
-\newcommand{\Mainmatter}{
-
-    \pagenumbering{arabic}
-    \setcounter{page}{1}
+% 標題建立指令 %
+\newcommand\zhHeader[1]{
+    \begin{center}
+    \makebox[4cm][s]{\textbf{\LARGE{#1}}}\\
+    \end{center}
+    \addcontentsline{toc}{chapter}{#1}
 }
+
+\newcommand\enHeader[1]{
+    \begin{center}
+    \makebox[3cm][c]{\textbf{\LARGE{#1}}}\\
+    \end{center}
+    \addcontentsline{toc}{chapter}{#1}
+}
+
+\defbibheading{bib}{\zhHeader{Bibliography}}
+
+\newcommand{\Endpoint}{\textit{Endpoint}}
+\newcommand{\Gateway}{\textit{Gateway}}
+\newcommand{\Route}{\textit{Route}}
+\newcommand{\Middleware}{\textit{Middleware}}
+\newcommand{\Handler}{\textit{Handler}}
+\newcommand{\Service}{\textit{Service}}
+\newcommand{\Context}{\textit{Context}}
+\newcommand{\Capability}{\textit{Capability}}
+\newcommand{\Hook}{\textit{Hook}}
+\newcommand{\Plugin}{\textit{Plugin}}
+
+\newcommand{\Router}{\textit{Router}}
+\newcommand{\Transport}{\textit{Transport}}
+\newcommand{\Producer}{\textit{Producer}}
+\newcommand{\Consumer}{\textit{Consumer}}
+\newcommand{\Capabilities}{\textit{Capabilities}}
+\newcommand{\Negotiate}{\textit{Negotiate}}

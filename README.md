@@ -39,7 +39,7 @@
 
 ## 使用說明
 
-1. 編譯方式建議使用 XeLaTeX（支援中文與字型）
+1. 編譯方式建議使用 XeLaTeX（支援中文與字型）dasd
 2. 修改 `titlepage.tex` 填入你的論文資訊
 3. 修改 `front-matter/` 內容為正文前的摘要、致謝、目錄、口試申請書等內容
 4. 修改 `chapters/` 內容為你的研究章節
@@ -51,6 +51,17 @@
 
 ![複製範本](figures/overleaf.png)
 
+## 本地編譯與 vscode 整合
+
+1. 請到 [TexLive](https://www.tug.org/texlive/) 的網站下載對應系統的安裝檔案(Linux 請不要用 apt 或是 dnf等套件管理工具，手動 tar 解壓縮後調用 perl 安裝)
+2. 在根目錄使用 `make` 指令即可，會嘗試建立 build 資料夾目錄並執行 `latexmk`。若 windows 沒有 `make`的話，有兩種處理方式：
+    - 安裝 MSYS2，然後通過 pacman 安裝 make
+    - 手動建立 `build` 資料夾，然後把當前目錄包含 `.tex` 檔案的資料夾，在 `build` 目錄建構一次
+      Ex. 根目錄的 `front-matter` 與 `chapters` 包含 `.tex` 檔案，那就建立 `build/front-matter` 與 `chapters`
+    - 上面的步驟是因為輸出的目錄為 `build`，而 latex 會嘗試在對應的資料夾建立 `.aux` 檔案，可以在 `.latexmkrc` 調整為當前目錄，或是參照上個步驟，手動建立資料夾的目錄
+    - 若都不照做也可以運作，但是編譯過程會詢問你要在哪裡存放 `.aux` 檔案，隨意輸入即可
+3. VSCode 可以考慮安裝 James-Yu.latex-workshop 套件，我個人沒有使用，但是網路上應該有許多參考資料。
+
 ## 檔案範例
 
 在 Chapters 中，介紹了 LaTeX 的基礎語法：
@@ -61,10 +72,9 @@
 - [X] 插入pseudo code演算法與程式範例
 - [X] ref與cite
 - [X] BibTeX 文獻管理，範例顯示 RFC、IEEE、技術文件與網站引用
-- [X] 中英文樣式切換（`\UseChineseStyle` 以及 `\UseEnglishStyle`）
-  - *bibType* 可以使用 zhbib 輸出「參考文獻」，或是 enbib 輸出「References」
+- [X] 中英文樣式切換
 
-絕大多數的想要修改輸出的內容都可以在 `environment.tex` 客製化，目前的範例只是使用台科大的規格當作範例去設定，參考[台科大論文格式](https://etheses.lib.ntust.edu.tw/media/download/ed6370c8-7c81-11ee-b999-0242ac1f0806.pdf)
+絕大多數的想要修改輸出的內容都可以在 `environment.tex`、`settings/chinese.tex`、`settings/english.tex` 客製化，目前的範例只是使用台科大的規格當作範例去設定，參考[台科大論文格式](https://etheses.lib.ntust.edu.tw/media/download/ed6370c8-7c81-11ee-b999-0242ac1f0806.pdf)
 
 ## 注意事項
 
@@ -120,7 +130,7 @@
 定義章節標題、段落樣式與目錄編排方式：
 
 - 支援中英文風格切換
-  - 使用 `\UseChineseStyle`、`\UseEnglishStyle` 一鍵切換
+  - 使用 `\input{settings/chinese}`、`\input{settings/english}` 切換不同環境
 - 可調整的項目包含：
   - 標題字級（chapter/section/subsection）
   - 編號格式
@@ -154,7 +164,7 @@
 - 自訂參考文獻標題：
   - 中文：`參考文獻`
   - 英文：`References`
-- 可使用 `\printbibliography[heading=zhbib]` 產生中文參考文獻區塊
+- 可使用 `\printbibliography[heading=bib]` 產生中文參考文獻區塊
 
 ## 授權與貢獻
 
